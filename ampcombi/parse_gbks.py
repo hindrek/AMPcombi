@@ -55,7 +55,9 @@ def gbk_parse(gbk_dir, stop_codon_window, ampcombi_dict_mod, transporter_window,
     # Window size for searching before the start and end positions
     window_size = stop_codon_window
     # Step size for sliding the window
-    window_step = 3 
+    window_step = 3
+    # Initialize variable for later checks
+    prev_seq_record_id = ""
     
     # look for the file name with correct ampcombi sample
     for d in ampcombi_dict_mod:
@@ -170,21 +172,24 @@ def gbk_parse(gbk_dir, stop_codon_window, ampcombi_dict_mod, transporter_window,
                                     #print(f"Codon sequence '{stop_minus}' not found in the window up and down stream of the hit '{start}'") 
                                     dict['CDS_stop_codon_found'] = 'no'
                                 listdict.append(dict.copy())
-            
+
             # if flagged remove hits with no stop codons found
             if filter_stop_codon == True:
                 listdict = [d for d in listdict if d.get('CDS_stop_codon_found') != 'no']
         
             #########
-            #  Step3: Extract the new gbks that contain the hits
+            #  Step3: Extract the new gbks that contain the hits if flag write_gbk is activated
             #########
-            for item in listdict:
-                if item['name'] and item['contig_name'] == record.id:
-                    name = item['name']
-                    contig_name = item['contig_name']
-                    new_seq_record = record
-                    print(f'writing {name}_{contig_name}.gbk')
-                    SeqIO.write(new_seq_record, f'{outgbk}/{name}_{contig_name}.gbk', "genbank")
+            if outgbk:
+                with open(outgbk,"a") as out_gbk:
+                    for item in listdict:
+                        if item['name'] and item['contig_name'] == record.id and record.id != prev_seq_record_id:
+                            name = item['name']
+                            contig_name = item['contig_name']
+                            prev_seq_record_id = record.id
+                            new_seq_record = record
+                            print(f'writing {name}_{contig_name}.gbk')
+                            SeqIO.write(new_seq_record, out_gbk, "genbank")
 
     return listdict
 
