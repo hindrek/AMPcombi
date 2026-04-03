@@ -185,6 +185,10 @@ In this case, we use the ``--path_list`` option to supply AMP tool prediction re
      - Path to a tsv-file containing contig metadata, e.g. 'path/to/contig_metadata.tsv'. The metadata table can have more information for contig classification that will be added to the output summary. The table needs to contain the sample names in the first column and the contig_ID in the second column. The metadata table can be the output from MMseqs2, pydamage, and MetaWrap.
      - None
      - ./contig_metadata.tsv/
+   * - **--write_gbk**
+     - Write a GBK file to disk containing contigs of filtered AMPs (e.g. if they include stop codons and transporter proteins in the vicinity).
+     - None
+     - None
    * - **--interproscan_filter**
      - A comma-separated list of all keywords that describe the protein that is not required in the analysis.
      - 'ribosomal protein,ribosomal proteins,ribosome protein,ribosomal rna,Ribosomal protein,RIBOSOMAL PROTEIN'

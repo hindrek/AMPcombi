@@ -188,7 +188,7 @@ def gbk_parse(gbk_dir, stop_codon_window, ampcombi_dict_mod, transporter_window,
                             contig_name = item['contig_name']
                             prev_seq_record_id = record.id
                             new_seq_record = record
-                            print(f'writing {name}_{contig_name}.gbk')
+                            print(f'Adding contig {contig_name} of sample {name} to GBK file.')
                             SeqIO.write(new_seq_record, out_gbk, "genbank")
 
     return listdict
