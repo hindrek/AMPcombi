@@ -142,9 +142,9 @@ cluster_parser.add_argument("--cluster_seq_id", dest="mmseqsseqid", nargs='?', h
                     type=float, default=0.4)
 cluster_parser.add_argument("--cluster_sensitivity", dest="mmseqssensitivity", nargs='?', help="This assigns sensitivity of alignment to the mmseqs2 cluster module- More information can be obtained in mmseqs2 docs at https://mmseqs.com/latest/userguide.pdf",
                     type=float, default=4.0)
-cluster_parser.add_argument("--cluster_remove_singletons", dest="removesingletons", nargs='?', help="This removes any hits that did not form a cluster",
-                    type=bool, default=True)
-cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This removes any cluster that only has a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
+cluster_parser.add_argument("--cluster_keep_singletons", dest="keepsingletons", help="This keeps any hits that did not form a cluster",
+                    action="store_true")
+cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This retains only clusters that have a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
                     type=str, default='')
 cluster_parser.add_argument("--cluster_min_member", dest="minnumber", nargs='?', help="This removes any cluster that has a hit number lower than this",
                     type=int, default=2)
@@ -410,7 +410,7 @@ def cluster(args):
     coverage = args.mmseqscoverage
     seq_id = args.mmseqsseqid
     sensitivity = args.mmseqssensitivity
-    remove_singletons = args.removesingletons
+    keep_singletons = args.keepsingletons
     min_cluster_members = args.minnumber
     retain_clusters_with = args.retainlabels
     threads = args.cores
@@ -419,7 +419,7 @@ def cluster(args):
     ampcombi_summary_df = pd.read_csv(ampcombi_summary, delimiter='\t')
     merged_df = parsing_input_for_cluster(ampcombi_summary_df)
     mmseqs_cluster(cov_mod,cluster_mode,coverage,seq_id,sensitivity,threads)
-    compile_clusters(merged_df,retain_clusters_with,remove_singletons,min_cluster_members)
+    compile_clusters(merged_df,retain_clusters_with,keep_singletons,min_cluster_members)
     print(f'\n DONE: Ampcombi_summary_cluster.tsv and AMPcombi_summary_cluster_representative_seq.tsv were saved to your current working directory.')
     print('\n ########################################################## ')
 
