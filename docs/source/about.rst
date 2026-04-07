@@ -48,7 +48,7 @@ AMPcombi is developed by an interdisciplinary team to:
        * - `UniRef100 <https://academic.oup.com/bioinformatics/article/23/10/1282/197795>`_
          - 2024_05 (mmseqs version)   
     
-    💡 If no database is provided by the user, AMPcombi will automatically download the `DRAMP db <https://github.com/CPU-DRAMP/DRAMP-3.0>`_ and use the files for classification.    
+    💡 If no database is provided by the user, AMPcombi will automatically download the `DRAMP db <https://github.com/CPU-DRAMP/DRAMP-3.0>`_ and use it for classification.    
     
     .. note::
 
@@ -118,7 +118,7 @@ The tool was initiated by `@louperelo <https://github.com/louperelo>`_ and expan
 Funding
 -------
 
-This project was funded by  Werner Siemens Foundation grant 'Palaeobiotechnology'.
+This project was funded by  Werner Siemens Foundation grant 'Paleobiotechnology'.
 
 .. image:: ../wss.svg
    :alt: wss icon

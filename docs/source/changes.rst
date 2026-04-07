@@ -86,5 +86,12 @@ v2.0.0, <15.11.2024>
 
 v2.0.1, <18.11.2024>
 --------------------
-- Fixed the python dependencies
-- Updated version numbers
+- Fixed the python dependencies.
+- Updated version numbers.
+
+v2.1.0, <xx.04.2026>
+--------------------
+- Added parameter ``--write_gbk`` to make saving of contig sequences optional.
+- Improved behaviour of saving contig sequences: If ``--write_gbk`` is activated, contig sequences are saved in one concatenated file instead of individual files.
+- Updated behaviour of boolean CLI flags.
+- Updated documentation.

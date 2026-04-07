@@ -45,7 +45,6 @@ To test the functionality of AMPcombi, we provide test files for the required an
 Those can be found in the `tests directory <https://raw.githubusercontent.com/paleobiotechnology/AMPcombi/main/tests/>`_.
 
 1. Download test files and untar
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: console
 
@@ -59,7 +58,6 @@ Those can be found in the `tests directory <https://raw.githubusercontent.com/pa
 .. tip:: These input files can be generated in a streamlined approach using `nf-core/funcscan <https://github.com/nf-core/funcscan>`_ - a pipeline for predicting functional genes in metagenomes.
 
 2. Parse tables and filter recovered AMP hits
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: console
 
@@ -77,7 +75,6 @@ Those can be found in the `tests directory <https://raw.githubusercontent.com/pa
         --log --threads 16
 
 3. Concatenate summary files
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: console
 
@@ -87,14 +84,12 @@ Those can be found in the `tests directory <https://raw.githubusercontent.com/pa
         ampcombi complete --summaries_directory ./test_ampsummaries --log
 
 4. Cluster filtered AMPs into families
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: console
 
         ampcombi cluster --ampcombi_summary Ampcombi_summary.tsv --log --threads 16
 
 5. Predict signal peptides
-^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. code-block:: console
 
