@@ -94,4 +94,4 @@ v2.1.0, <xx.04.2026>
 - Added parameter ``--write_gbk`` to make saving of contig sequences optional.
 - Improved behaviour of saving contig sequences: If ``--write_gbk`` is activated, contig sequences are saved in one concatenated file instead of individual files.
 - Updated behaviour of boolean CLI flags.
-- Updated documentation.
+- Updated documentation, added column descriptions of AMPcombi summary files.
