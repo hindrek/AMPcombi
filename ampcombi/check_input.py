@@ -127,20 +127,20 @@ def check_directory_tree(path, tools, samplelist):
 def check_input_complete(path, samplelist, filepaths, tools):
     # 1. Head folder does not exist and filepaths-list was not given
     if((not check_path(path)) and (not filepaths)):
-        sys.exit('AMPcombi interrupted: Please provide the correct path to either the folder containing all amp files to be summarized (--amp_results) or the list of paths to the files (--path_list)')
+        sys.exit('AMPcombi interrupted: Please provide the correct path to either the folder containing all AMP files to be summarized (--amp_results) or the list of paths to the files (--path_list)')
     # 2. Head folder does not exist, filepaths-list was given but no samplelist
     elif((not check_path(path)) and (filepaths) and (not samplelist)):
-        sys.exit('AMPcombi interrupted: Please provide a list of sample-names (--sample_list) in addition to --path_list')
-    # 3. Head folder does not exist, filepaths- and samplelist are given:
+        sys.exit('AMPcombi interrupted: Please provide a list of sample names (--sample_list) in addition to --path_list')
+    # 3. Head folder does not exist, filepaths and samplelist are given:
     elif((not check_path(path)) and (not filepaths) and (not samplelist)):
         for file in filepaths:
             print(f'in check_input_complete the file in filepath is:')
-            # 3.1. check if paths in filepath-list exist
+            # 3.1. check if paths in filepath list exist
             if(not check_path(file)):
-                sys.exit(f'AMPcombi interrupted: The path {file} does not exist. Please check the --path_list input.')
+                sys.exit(f'AMPcombi interrupted: The path {file} does not exist. Please check the --path_list value.')
             # 3.2. check if paths contain sample-names from samplelist
             if(not any(n in file for n in samplelist)):
-                sys.exit(f'AMPcombi interrupted: The path {file} does not contain any of the sample-names given in --sample_list')
+                sys.exit(f'AMPcombi interrupted: The path {file} does not contain any of the sample names given in --sample_list')
     # 4. Head folder and sample-list are given
     elif((check_path(path)) and (not samplelist)):
         check_directory_tree(path, tools, samplelist)

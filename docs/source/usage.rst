@@ -171,7 +171,7 @@ Explanation of parameters:
    * - Parameter
      - Description
      - Default
-     - Other example value
+     - Different example value
    * - ``--amp_cutoff``
      - Probability cutoff to filter AMPs by probability (not applicable for hmmsearch)
      - 0.0
@@ -290,14 +290,111 @@ The output will be written into your working directory, containing the following
     └── Ampcombi_summary.tsv
     └── Ampcombi_complete.log
 
+Description of columns in ``Ampcombi_summary.tsv``:
+
+.. list-table:: 
+   :header-rows: 1
+   :widths: 15 35
+
+   * - Column
+     - Description
+   * - ``sample_id``
+     - Sample ID as given by the user in ``--sample_list``
+   * - ``CDS_id``
+     - ID of the coding sequence (CDS) as annotated in input GBK file
+   * - ``prob_amplify``
+     - Probability of correct AMP prediction as given by AMPlify (value range 0-1)
+   * - ``prob_ampir``
+     - Probability of correct AMP prediction as given by ampir (value range 0-1)
+   * - ``prob_macrel``
+     - Probability of correct AMP prediction as given by Macrel (value range 0-1)
+   * - ``aa_sequence``
+     - Amino-acid sequence of the annotated AMP
+   * - ``accession``
+     - Accession number(s) as provided by the optional InterProScan results files
+   * - ``description``
+     - Protein description as provided by the optional InterProScan results files
+   * - ``interpro_accession``
+     - InterProScan accession number(s) as provided by the optional InterProScan results files
+   * - ``interpro_description``
+     - Additional protein description as provided by the optional InterProScan results files
+   * - ``query``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): ID of the coding sequence (is redundant with ``CDS_id``)
+   * - ``target``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): ID of the target sequence in reference database
+   * - ``evalue``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): E-value of the alignment by MMseqs2
+   * - ``pident``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Percent of identical matches by MMseqs2
+   * - ``nident``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Number of identical matches by MMseqs2
+   * - ``tlen``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Target amino acid sequence length
+   * - ``tstart``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): 1-indexed alignment start position in target sequence
+   * - ``tend``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): 1-indexed alignment end position in target sequence
+   * - ``taln``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Alignment sequence (amino acids, gaps)
+   * - ``theader``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): ID of the target sequence in reference database (is redundant with ``target``)
+   * - ``alnlen``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Alignment length
+   * - ``qcov``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Fraction of coverage of the query sequence
+   * - ``tcov``
+     - If AMP hit was found in reference database (DRAMP, APD, or UniRef100): Fraction of coverage of the target sequence
+   * - ``DRAMP_ID``
+     - If AMP hit was found in DRAMP database: ID of the target sequence in reference database (is redundant with ``target``)
+   * - ``Sequence``
+     - If AMP hit was found in DRAMP database: Target sequence
+   * - ``Name``
+     - If AMP hit was found in DRAMP database: Target protein name
+   * - ``Swiss_Prot_Entry``
+     - If AMP hit was found in DRAMP database: Target protein UniProt/Swiss-Prot ID (if available)
+   * - ``Family``
+     - If AMP hit was found in DRAMP database: Protein family information (if available)
+   * - ``Gene``
+     - If AMP hit was found in DRAMP database: Associated gene (if available)
+   * - ``Source``
+     - If AMP hit was found in DRAMP database: Biological or synthetic source of the reference hit (if available)
+   * - ``PDB_ID``
+     - If AMP hit was found in DRAMP database: Protein Data Bank ID (if available)
+   * - ``Target_Organism``
+     - If AMP hit was found in DRAMP database: More information on the target organism (if available)
+   * - ``molecular_weight``
+     - Molecular weight as identified by Biopython (ProteinAnalysis)
+   * - ``helix_fraction``
+     - Fraction of amino acids in helix secondary structure as identified by Biopython (ProteinAnalysis)
+   * - ``turn_fraction``
+     - Fraction of amino acids in turn secondary structure as identified by Biopython (ProteinAnalysis)
+   * - ``sheet_fraction``
+     - Fraction of amino acids in beta sheet secondary structure as identified by Biopython (ProteinAnalysis)
+   * - ``isoelectric_point``
+     - Isoelectric point as identified by Biopython (ProteinAnalysis)
+   * - ``hydrophobicity``
+     - Hydrophobicity as identified by Biopython (ProteinAnalysis)
+   * - ``transporter_protein``
+     - Presence or absence of transporter protein in the genomic vicinity of the AMP
+   * - ``contig_id``
+     - Contig ID of the AMP
+   * - ``CDS_start``
+     - AMP CDS start position on contig
+   * - ``CDS_end``
+     - AMP CDS end position on contig
+   * - ``CDS_dir``
+     - Forward or reverse AMP CDS on contig
+   * - ``CDS_stop_codon_found``
+     - DNA sequence of stop codon in the vicinity of the AMP CDS if present
+
 cluster
 ^^^^^^^
 
-The `cluster` submodule clusters the output from  ``complete`` (i.e., `Ampcombi_summary.tsv`) into subclasses of somewhat similar AMP families.
+The ``cluster`` submodule clusters the output from  ``complete`` (i.e., ``Ampcombi_summary.tsv``) into subclasses of similar AMP families.
 This relies primarily on `MMSeqs2 cluster v.15.6f452 <https://www.nature.com/articles/nbt.3988>`_.
 Only some parameters that were deemed important for the purpose of AMPcombi were incorporated as optional arguments.
 
-To get a full list of options available and their defaults please refer to the help documentation of the submodule:
+To get a full list of available options and their defaults please refer to the help documentation of the submodule:
 
 .. code-block:: console
 
@@ -321,7 +418,7 @@ The ``--ampcombi_summary`` parameter takes the output of ``ampcombi complete`` (
    * - Parameter
      - Description
      - Default
-     - Other example value
+     - Different example value
    * - ``--cluster_cov_mode``
      - This assigns the coverage mode to the mmseqs2 cluster module. More information can be obtained in mmseqs2 docs `here <https://mmseqs.com/latest/userguide.pdf>`__.
      - 0
@@ -366,9 +463,15 @@ The output will be written into your working directory, containing the following
       ├── Ampcombi_summary_cluster_representative_seq.tsv
       └── Ampcombi_cluster.log
 
-- ``Ampcombi_summary_cluster.tsv`` includes the contents of the complete summary plus a column with cluster IDs. 
-- ``Ampcombi_summary_cluster_representative_seq.tsv`` includes the table with all representative hits from each cluster.
+- ``Ampcombi_summary_cluster.tsv`` includes the contents of the complete summary (``Ampcombi_summary.tsv``) plus two additional columns:
 
+  - ``seq_headers``: Sequence header of the representative AMP of the cluster 
+  - ``cluster_id``: ID of the cluster to which the AMP belongs
+
+- ``Ampcombi_summary_cluster_representative_seq.tsv``:
+
+  - This file contains a short summary of the identified clusters, i.e. the header of their representative AMP sequence (``seq_headers``), the cluster ID (``index``), and the size of the cluster (``total_cluster_members``).
+  - Clusters of interest can be investigated in further detail in the comprehensive summary file ``Ampcombi_summary_cluster.tsv`` described above.
 
 signal_peptide
 ^^^^^^^^^^^^^^
