@@ -118,7 +118,7 @@ The tool was initiated by `@louperelo <https://github.com/louperelo>`_ and expan
 Funding
 -------
 
-This project was funded by  Werner Siemens Foundation grant 'Paleobiotechnology'.
+This project was funded by Werner Siemens Foundation grant 'Paleobiotechnology'.
 
 .. image:: ../wss.svg
    :alt: wss icon

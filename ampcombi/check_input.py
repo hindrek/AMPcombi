@@ -137,7 +137,7 @@ def check_input_complete(path, samplelist, filepaths, tools):
             print(f'in check_input_complete the file in filepath is:')
             # 3.1. check if paths in filepath list exist
             if(not check_path(file)):
-                sys.exit(f'AMPcombi interrupted: The path {file} does not exist. Please check the --path_list value.')
+                sys.exit(f'AMPcombi interrupted: The path {file} does not exist. Please check the --path_list input.')
             # 3.2. check if paths contain sample-names from samplelist
             if(not any(n in file for n in samplelist)):
                 sys.exit(f'AMPcombi interrupted: The path {file} does not contain any of the sample names given in --sample_list')

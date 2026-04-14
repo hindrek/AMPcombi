@@ -5,7 +5,7 @@ with open('README.md') as fh:
 
 setup(
     name='AMPcombi',
-    version='2.0.1',
+    version='3.0.0',
     author='Anan Ibrahim, Louisa Perelo',
     author_email='ananhamido@hotmail.com, louperelo@gmail.com',
     #packages=['ampcombi'],
