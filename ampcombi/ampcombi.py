@@ -337,6 +337,9 @@ def process_sample(
     # parse gene bank file and filter for contig IDs with stop codons, if applicable (grabs contig IDs, and extract filetred gbks)
     if write_gbk:
         outgbk = os.path.join(sample, sample + '_filtered_AMP_contigs.gbk')
+        if os.path.isfile(outgbk):
+            print(f"Warning: The file {outgbk} already exists. I will rename the original file to avoid a file collision.")
+            os.rename(outgbk, outgbk + ".bak")
     else:
         outgbk = None
     print(f'Parsing the corresponding gene bank file for {sample} ....')
