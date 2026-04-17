@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Anan Ibrahim
+Copyright (c) 2026 Anan Ibrahim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@ SOFTWARE.
 A list of all licenses of packages installed or used in AMPcombi:
 
  Name                           Version      License                                                                                           URL                                                      
- AMPcombi                       2.0.0.dev0   MIT License                                                                                       http://pypi.python.org/pypi/AMPcombi/                    
+ AMPcombi                       3.0.0        MIT License                                                                                       http://pypi.python.org/pypi/AMPcombi/                    
  Jinja2                         3.1.4        BSD License                                                                                       https://github.com/pallets/jinja/                        
  MarkupSafe                     3.0.2        BSD License                                                                                       https://github.com/pallets/markupsafe/                   
  PyYAML                         6.0.2        MIT License                                                                                       https://pyyaml.org/                                      

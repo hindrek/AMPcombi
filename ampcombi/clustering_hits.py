@@ -148,7 +148,7 @@ def compile_clusters(merged_df,retain_clusters_with, keep_singletons, min_cluste
     shutil.rmtree('./clusters')
     shutil.rmtree('./tmp')
     
-    # remove singletons (= None)
+    # remove singletons
     if keep_singletons == False:
         ampcombi_cluster = ampcombi_cluster.dropna(subset=['cluster_id'])
 

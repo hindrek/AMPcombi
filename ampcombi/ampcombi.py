@@ -146,7 +146,7 @@ cluster_parser.add_argument("--cluster_sensitivity", dest="mmseqssensitivity", n
                     type=float, default=4.0)
 cluster_parser.add_argument("--cluster_keep_singletons", dest="keepsingletons", help="This keeps any hits that did not form a cluster",
                     action="store_true")
-cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This removes any cluster that only has a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
+cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This retains only clusters that have a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
                     type=str, default='')
 cluster_parser.add_argument("--cluster_min_member", dest="minnumber", nargs='?', help="This removes any cluster that has a hit number lower than this",
                     type=int, default=2)
