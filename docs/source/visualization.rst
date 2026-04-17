@@ -52,5 +52,3 @@ Example upset plot:
    :alt: ampcombi screenshot 2
    :width: 800
    :height: 370
-   
-----
