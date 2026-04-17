@@ -89,7 +89,7 @@ v2.0.1, <18.11.2024>
 - Fixed the python dependencies.
 - Updated version numbers.
 
-v3.0.0, <xx.04.2026>
+v3.0.0, <17.04.2026>
 --------------------
 Breaking change (to comply with `semantic versioning <https://semver.org/>`_):
 
