@@ -25,7 +25,7 @@ Installation
 
   .. code-block:: bash
 
-     singularity pull ampcombi:2.2.0--pyhdfd78af_0
+     singularity pull ampcombi:3.0.0--pyhdfd78af_0
 
 - Clone **GitHub** repository:
 
