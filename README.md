@@ -13,8 +13,6 @@
 - cluster the filtered AMP hits into AMP families
 - predict signaling peptides if present along the prepropeptide sequence
 
-
-📕 The full usage documentation for AMPcombi can be accessed at [Read the Docs](https://ampcombi.readthedocs.io/en/main/).
-
+📕 The full usage documentation for AMPcombi can be accessed [here](https://ampcombi.readthedocs.io/en/main/).
 
 📎 If you plan to use AMPcombi please don't forget to **cite** us 💚

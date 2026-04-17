@@ -86,5 +86,18 @@ v2.0.0, 15.11.2024
 
 v2.0.1, 18.11.2024
 --------------------
-- Fixed the python dependencies
-- Updated version numbers
+- Fixed the python dependencies.
+- Updated version numbers.
+
+v3.0.0, <17.04.2026>
+--------------------
+Breaking change (to comply with `semantic versioning <https://semver.org/>`_):
+
+- Updated behaviour of boolean CLI flags.
+- Replaced ``--cluster_remove_singletons`` with ``--cluster_keep_singletons``.
+
+Other changes:
+
+- Added parameter ``--write_gbk`` to make saving of contig sequences optional.
+- Improved behaviour of saving contig sequences: If ``--write_gbk`` is activated, contig sequences are saved in one concatenated file instead of multiple individual files.
+- Updated documentation, added column descriptions of AMPcombi summary files.

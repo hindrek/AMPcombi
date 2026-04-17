@@ -72,8 +72,8 @@ parse_all_parser.add_argument("--window_size_stop_codon", dest="stopwindowsize",
                     type=int, default=60)
 parse_all_parser.add_argument("--window_size_transporter", dest="transporterwindowsize", help="Enter the length of the window size required to look for a 'transporter' e.g. ABC transporter downstream and upstream of the CDS hits. \n (default: %(default)s)",
                     type=int, default=11)
-parse_all_parser.add_argument("--remove_stop_codons", dest="removestops", help="Removes any hits/CDSs that don't have a stop codon found in the window below or upstream of the CDS assigned by '--window_size_stop_codon'. Must be turned on if hits are to be removed. \n (default: %(default)s)",
-                    type=bool, default=False)
+parse_all_parser.add_argument("--remove_stop_codons", dest="removestops", help="Remove any hits/CDSs that don't have a stop codon found in the window below or upstream of the CDS assigned by '--window_size_stop_codon'. Must be turned on if hits are to be removed.",
+                    action="store_true")
 parse_all_parser.add_argument("--faa", dest="faa", help="Enter the path to the folder containing the reference .faa files or to one .faa file (running only one sample). Filenames have to contain the corresponding sample-name, i.e. sample_1.faa \n (default: %(default)s)",
                     type=str, default='./test_faa/')
 parse_all_parser.add_argument("--gbk", dest="gbk", help="Enter the path to the folder containing the reference .gbk/.gbff files or to one .gbk/.gbff file (running only one sample). Filenames have to contain the corresponding sample-name, i.e. sample_1.gbk/ sample_1.gbff \n (default: %(default)s)",
@@ -106,8 +106,10 @@ parse_all_parser.add_argument("--sample_metadata", dest="samplemetadata", help="
                     type=str, default=None)
 parse_all_parser.add_argument("--contig_metadata", dest="contigmetadata", help="Path to a tsv-file containing contig metadata, e,g, 'path/to/contig_metadata.tsv'. The metadata table can have more information for contig classification that will be added to the output summary. The table needs to contain the sample names in the first column and the contig_ID in the second column. This can be the output from MMseqs2, pydamage and MetaWrap. \n (default: %(default)s)",
                     type=str, default=None)
-parse_all_parser.add_argument("--log", dest="log_file", nargs='?', help="Silences the standard output and captures it in a log file)",
-                    type=bool, default=False)
+parse_all_parser.add_argument("--write_gbk", dest="write_gbk", help="Write a GBK file to disk containing all contigs of filtered AMPs (e.g. if they include stop codons and transporter proteins in the vicinity).",
+                    action="store_true")
+parse_all_parser.add_argument("--log", dest="log_file", help="Silence the standard output and capture it in a log file.",
+                    action="store_true")
 parse_all_parser.add_argument("--threads", dest="cores", nargs='?', help="Changes the threads used for DIAMOND alignment (default: %(default)s)",
                     type=int, default=4)
 parse_all_parser.add_argument('--version', action='version', version='ampcombi' + __version__)
@@ -121,8 +123,8 @@ complete_parser.add_argument("--summaries_directory", dest="summarydir", nargs='
                     type=str)
 complete_parser.add_argument("--summaries_files", dest="summaryfile", nargs='+', help="Enter a list of samples' ampcombi summaries, e.g. ./ampcombi/sample_1/sample_1_ampcombi.tsv ./ampcombi/sample_2_ampcombi.tsv",
                     type=str)
-complete_parser.add_argument("--log", dest="log_file", nargs='?', help="Silences the standard output and captures it in a log file)",
-                    type=bool, default=False)
+complete_parser.add_argument("--log", dest="log_file", help="Silence the standard output and capture it in a log file.",
+                    action="store_true")
 complete_parser.add_argument('--version', action='version', version='ampcombi' + __version__)
 
 #########################################
@@ -142,16 +144,16 @@ cluster_parser.add_argument("--cluster_seq_id", dest="mmseqsseqid", nargs='?', h
                     type=float, default=0.4)
 cluster_parser.add_argument("--cluster_sensitivity", dest="mmseqssensitivity", nargs='?', help="This assigns sensitivity of alignment to the mmseqs2 cluster module- More information can be obtained in mmseqs2 docs at https://mmseqs.com/latest/userguide.pdf",
                     type=float, default=4.0)
-cluster_parser.add_argument("--cluster_remove_singletons", dest="removesingletons", nargs='?', help="This removes any hits that did not form a cluster",
-                    type=bool, default=True)
-cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This removes any cluster that only has a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
+cluster_parser.add_argument("--cluster_keep_singletons", dest="keepsingletons", help="This keeps any hits that did not form a cluster",
+                    action="store_true")
+cluster_parser.add_argument("--cluster_retain_label", dest="retainlabels", nargs='?', help="This retains only clusters that have a certain label in the sample name. For example if you have samples labels with 'S1_metaspades' and 'S1_megahit', you can retain clusters that have samples with suffix '_megahit' by running '--retain_clusters_label megahit'",
                     type=str, default='')
 cluster_parser.add_argument("--cluster_min_member", dest="minnumber", nargs='?', help="This removes any cluster that has a hit number lower than this",
                     type=int, default=2)
 cluster_parser.add_argument("--threads", dest="cores", nargs='?', help="Changes the threads used for DIAMOND alignment (default: %(default)s)",
                     type=int, default=4)
-cluster_parser.add_argument("--log", dest="log_file", nargs='?', help="Silences the standard output and captures it in a log file)",
-                    type=bool, default=False)
+cluster_parser.add_argument("--log", dest="log_file", help="Silence the standard output and capture it in a log file.",
+                    action="store_true")
 cluster_parser.add_argument('--version', action='version', version='ampcombi' + __version__)
 
 #########################################
@@ -163,8 +165,8 @@ signalp_parser.add_argument("--ampcombi_cluster", dest="clustersummary", nargs='
                     type=str, default='./Ampcombi_summary_cluster.tsv')
 signalp_parser.add_argument("--signalp_model", dest="signalpmodels", nargs='?', help="Enter a directory path corresponding to the signalp models. More information can be found in signalp documentation at https://services.healthtech.dtu.dk/services/SignalP-6.0/",
                     type=str, default='./models/')
-signalp_parser.add_argument("--log", dest="log_file", nargs='?', help="Silences the standard output and captures it in a log file)",
-                    type=bool, default=False)
+signalp_parser.add_argument("--log", dest="log_file", help="Silence the standard output and capture it in a log file.",
+                    action="store_true")
 signalp_parser.add_argument('--version', action='version', version='ampcombi' + __version__)
 
 #########################################
@@ -209,6 +211,7 @@ def parse_tables(args):
     interpro_filter_values = args.interpro_remove
     add_samplemetadata = args.samplemetadata
     add_contigmetadata = args.contigmetadata
+    write_gbk = args.write_gbk
     threads = args.cores
 
     # additional variables
@@ -259,14 +262,14 @@ def parse_tables(args):
                     sample, filepaths[i], amp_faa_paths, db, threads, dbevalue, p, 
                     hmmevalue, tooldict, faa_path, gbk_dir, interpro_dir, interpro_filter_values, 
                     aa_len, stop_codon_window, transporter_window, filter_stop_codon, add_samplemetadata, 
-                    add_contigmetadata)
+                    add_contigmetadata, write_gbk)
             shutil.move(log_file_t, os.path.join(sample, log_file_t))
         else:
             process_sample(
                 sample, filepaths[i], amp_faa_paths, db, threads, dbevalue, p, 
                 hmmevalue, tooldict, faa_path, gbk_dir, interpro_dir, interpro_filter_values, 
                 aa_len, stop_codon_window, transporter_window, filter_stop_codon, add_samplemetadata, 
-                add_contigmetadata)
+                add_contigmetadata, write_gbk)
 
     # remove the temp directory if it exists
     if os.path.exists('./temp'):
@@ -275,7 +278,7 @@ def parse_tables(args):
 def process_sample(
     sample, filepaths, amp_faa_paths, db, threads, dbevalue, p, hmmevalue, tooldict, faa_path, gbk_dir, 
     interpro_dir, interpro_filter_values, aa_len, stop_codon_window, transporter_window, filter_stop_codon, 
-    add_samplemetadata, add_contigmetadata):
+    add_samplemetadata, add_contigmetadata, write_gbk):
     """
     This parses, filters and aligns the antimicrobial peptides sample by sample. 
     It extensively uses pandas, BioPython to parse tables and retrieve details like physiochemical
@@ -332,8 +335,13 @@ def process_sample(
     sample_summary_df = sample_summary_df_functions
 
     # parse gene bank file and filter for contig IDs with stop codons, if applicable (grabs contig IDs, and extract filetred gbks)
-    outgbk = os.path.join(sample, 'contig_gbks')
-    os.makedirs(outgbk, exist_ok=True)
+    if write_gbk:
+        outgbk = os.path.join(sample, sample + '_filtered_AMP_contigs.gbk')
+        if os.path.isfile(outgbk):
+            print(f"Warning: The file {outgbk} already exists. I will rename the original file to avoid a file collision.")
+            os.rename(outgbk, outgbk + ".bak")
+    else:
+        outgbk = None
     print(f'Parsing the corresponding gene bank file for {sample} ....')
     sample_summary_df = gbkparsing(sample_summary_df, gbk_name, stop_codon_window, transporter_window, filter_stop_codon, outgbk)
 
@@ -410,7 +418,7 @@ def cluster(args):
     coverage = args.mmseqscoverage
     seq_id = args.mmseqsseqid
     sensitivity = args.mmseqssensitivity
-    remove_singletons = args.removesingletons
+    keep_singletons = args.keepsingletons
     min_cluster_members = args.minnumber
     retain_clusters_with = args.retainlabels
     threads = args.cores
@@ -419,7 +427,7 @@ def cluster(args):
     ampcombi_summary_df = pd.read_csv(ampcombi_summary, delimiter='\t')
     merged_df = parsing_input_for_cluster(ampcombi_summary_df)
     mmseqs_cluster(cov_mod,cluster_mode,coverage,seq_id,sensitivity,threads)
-    compile_clusters(merged_df,retain_clusters_with,remove_singletons,min_cluster_members)
+    compile_clusters(merged_df,retain_clusters_with,keep_singletons,min_cluster_members)
     print(f'\n DONE: Ampcombi_summary_cluster.tsv and AMPcombi_summary_cluster_representative_seq.tsv were saved to your current working directory.')
     print('\n ########################################################## ')
 

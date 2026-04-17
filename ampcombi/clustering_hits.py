@@ -71,7 +71,7 @@ def mmseqs_cluster(cov_mod,cluster_mode,coverage,seq_id,sensitivity,threads):
 ########################################
 # FUNCTION: COMPILE THE CLUSTERS IN TABLE
 #########################################
-def compile_clusters(merged_df,retain_clusters_with, remove_singletons, min_cluster_members):
+def compile_clusters(merged_df,retain_clusters_with, keep_singletons, min_cluster_members):
     # collect the clusters in a list and df
     cluster = "./clusters/sequenceDBclu.tsv"
     clusters = pd.read_csv(cluster, sep='\t', header=None)
@@ -148,8 +148,8 @@ def compile_clusters(merged_df,retain_clusters_with, remove_singletons, min_clus
     shutil.rmtree('./clusters')
     shutil.rmtree('./tmp')
     
-    # remove singletons (= None)
-    if remove_singletons == True:
+    # remove singletons
+    if keep_singletons == False:
         ampcombi_cluster = ampcombi_cluster.dropna(subset=['cluster_id'])
 
     # remove cds_ID to grab only the gbk files corresponding to the dereplicated hits 

@@ -23,3 +23,4 @@ docs/_build/
 
 __pycache__/
 ampcombi/__pycache__/
+pyshiny/__pycache__

@@ -36,16 +36,15 @@ Download the interproscan datasets as described `in the user documents <https://
             --applications PANTHER,ProSiteProfiles,ProSitePatterns,Pfam \
             --disable-residue-annot \
             --enable-tsv-residue-annot \
-            --formats tsv  ; done
+            --formats tsv; done
 
 Full run
 -----------
 
 To test the functionality of AMPcombi, we provide test files for the required and optional inputs. 
-Those can be found in the `tests directory <https://raw.githubusercontent.com/Darcy220606/AMPcombi/main/tests/>`_.
+Those can be found in the `tests directory <https://raw.githubusercontent.com/paleobiotechnology/AMPcombi/main/tests/>`_.
 
-**Step1**: 
-Download the test files and untar:
+1. Download test files and untar
 
     .. code-block:: console
 
@@ -56,10 +55,9 @@ Download the test files and untar:
         tar -xzvf ./tests/test_files.tar.gz
         tar -xzvf ./tests/test_optional_files.tar.gz
 
-📍 These input files can be generated ina  streamlined approach using `nf-core/funcscan <https://github.com/nf-core/funcscan>`_ - a pipeline for predicting functional genes in metagenomes.
+.. tip:: These input files can be generated in a streamlined approach using `nf-core/funcscan <https://github.com/nf-core/funcscan>`_ - a pipeline for predicting functional genes in metagenomes.
 
-**Step2**: 
-Parse the tables and filter the AMP hits recovered:
+2. Parse tables and filter recovered AMP hits
 
     .. code-block:: console
 
@@ -74,32 +72,29 @@ Parse the tables and filter the AMP hits recovered:
         --amp_database 'DRAMP' \
         --aminoacid_length 100 --db_evalue 100 --amp_cutoff 0.7 \
         --ampir_file '.tsv' --amplify_file '.tsv' --macrel_file '.tsv' --neubi_file '.fasta' --hmmsearch_file '.txt' --ampgram_file '.tsv' --amptransformer_file '.txt' \
-        --log 'true' --threads 16
+        --log --threads 16
 
-**Step3**: 
-Concatenate the summary files:
+3. Concatenate summary files
 
     .. code-block:: console
 
         mv sample_1 test_ampsummaries/
         mv sample_2 test_ampsummaries/        
         
-        ampcombi complete --summaries_directory ./test_ampsummaries --log 'true'
+        ampcombi complete --summaries_directory ./test_ampsummaries --log
 
-**Step4**: 
-Cluster the the filtered AMPs into families:
+4. Cluster filtered AMPs into families
 
     .. code-block:: console
 
-        ampcombi cluster --ampcombi_summary Ampcombi_summary.tsv --log 'true' --threads
+        ampcombi cluster --ampcombi_summary Ampcombi_summary.tsv --log --threads 16
 
-**Step5**: 
-Predict signal peptides:
+5. Predict signal peptides
 
     .. code-block:: console
 
         ampcombi signal_peptide \
         --ampcombi_cluster Ampcombi_summary_cluster.tsv \
-        --signalp_model ./signalpv6.0h-slowsequential/models --log 'true'
+        --signalp_model ./signalpv6.0h-slowsequential/models --log
 
 
